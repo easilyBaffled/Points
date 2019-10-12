@@ -20,7 +20,7 @@
     "wait-on": "^3.3.0"
   },
   "scripts": {
-    "ci": "npm start & wait-on http://localhost:3000 && cypress run",
+    "ci": "npm start & wait-on http://localhost:3000",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

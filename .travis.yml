@@ -13,7 +13,5 @@ cache:
   directories:
     # we also need to cache folder with Cypress binary
     - ~/.cache
-install:
-  - npm ci
 script:
-  - $(npm bin)/cypress run --record --key e418092a-efa3-491a-a238-c6082278e7b2
+  - npm start && $(npm bin)/wait-on http://localhost:3000 && $(npm bin)/cypress run --record --key e418092a-efa3-491a-a238-c6082278e7b2

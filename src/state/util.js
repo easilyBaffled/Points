@@ -71,10 +71,16 @@ export const createActions = updaters =>
     {}
   );
 
-export const createReducer = (actors, initialState) => (
+export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
-  { type, payload } = {}
-) => (type in actors ? actors[type](payload)(state) : state);
+  { type = r`type`, payload = r`payload` } = r`action object`
+) => {
+  if (!(type in actors))
+    throw new Error(
+      `action type ${type} is not one of ${Object.keys(actors)} `
+    );
+  return actors[type](payload)(state) || state;
+};
 
 export const useEntityDispatch = entityId => {
   const dispatch = useDispatch();

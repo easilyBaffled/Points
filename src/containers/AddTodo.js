@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actions } from "../state/entities/todoList.js";
 
 let AddTodo = ({ dispatch }) => {
-  let input;
+  const [text, setText] = useState();
+  const [value, setValue] = useState();
 
   return (
     <div>
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!input.value.trim()) {
-            return;
-          }
-          dispatch(actions.addTodo(input.value));
-          input.value = "";
+          dispatch(actions.addTodo({ text, value }));
+          setText();
+          setValue();
         }}
       >
-        <input
-          ref={node => {
-            input = node;
-          }}
-        />
-        <button type="submit">Add Todo</button>
+        <input onChange={e => setText(e.target.value)} />
+        <input onChange={e => setValue(e.target.value)} />
+        {text}
+        <button type="submit" disabled={!text}>
+          Add Todo
+        </button>
       </form>
     </div>
   );

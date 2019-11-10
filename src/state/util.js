@@ -1,17 +1,5 @@
 import { useDispatch } from "react-redux";
 
-/**
- * @function StateUpdater
- * @param {object} state
- * @return {object} updated state
- */
-
-/**
- * @function Actor
- * @param {*} payload
- * @return StateUpdater
- */
-
 const required = ([name] = [""]) => {
   throw new Error(`${name || "value"} is required.`);
 };
@@ -73,13 +61,8 @@ export const createActions = updaters =>
 
 export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
-  { type = r`type`, payload, ...rest } = r`action object`
+  { type = r`type`, payload } = r`action object`
 ) => {
-  // if (!(type in actors))
-  //   throw new Error(
-  //     `action type ${type} is not one of ${Object.keys(actors)} `
-  //   );
-  console.log(payload, rest);
   return type in actors ? actors[type](payload)(state) : state;
 };
 
@@ -89,19 +72,3 @@ export const useEntityDispatch = entityId => {
     dispatch({ id: entityId, ...action });
   };
 };
-
-/**
- * @typedef {Object<string, function(*=, *=): function({x: *, y: *}): {x: *, y: *}>} Actors
- */
-
-/**
- *
- * @type {Actors}
- */
-const o = {
-  move: (nextX, nextY) => ({ x, y }) => ({ x: nextX, y: nextY || y }),
-  test: "a",
-  func: () => "func"
-};
-
-// console.log(o, o.move(1)(1));

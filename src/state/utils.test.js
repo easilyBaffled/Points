@@ -83,7 +83,13 @@ describe("createActions", () => {
 });
 
 describe("createReducer", () => {
-  // describe('combines an actor object and state into a reducer function',  )
+  it("returns state on a non-matching type", () => {
+    const expected = { num: 0 };
+    const actual = createReducer(mathActors, state)(state, {
+      type: "init"
+    });
+    expect(actual).toEqual(expected);
+  });
   it("produces a reducer function", () => {
     const expected = "function";
     const actual = typeof createReducer(mathActors, state);
@@ -98,9 +104,9 @@ describe("createReducer", () => {
       });
       expect(actual).toEqual(expected);
     });
-    it("will throw if the action type is not in the list of actors", () => {
-      const mathReducer = createReducer(mathActors, state);
-      expect(() => mathReducer({ type: "sum", payload: 0 })).toThrow();
-    });
+    // it("will throw if the action type is not in the list of actors", () => {
+    //   const mathReducer = createReducer(mathActors, state);
+    //   expect(() => mathReducer({ type: "sum", payload: 0 })).toThrow();
+    // });
   });
 });

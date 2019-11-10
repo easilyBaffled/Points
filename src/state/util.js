@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 const required = ([name] = [""]) => {
   throw new Error(`${name || "value"} is required.`);
 };
-const r = required;
+export const r = required;
 /**
  * A function that assumes only one value in the matching object will be true.
  * Calls last value in an object where key is true.
@@ -73,13 +73,14 @@ export const createActions = updaters =>
 
 export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
-  { type = r`type`, payload = r`payload` } = r`action object`
+  { type = r`type`, payload, ...rest } = r`action object`
 ) => {
-  if (!(type in actors))
-    throw new Error(
-      `action type ${type} is not one of ${Object.keys(actors)} `
-    );
-  return actors[type](payload)(state) || state;
+  // if (!(type in actors))
+  //   throw new Error(
+  //     `action type ${type} is not one of ${Object.keys(actors)} `
+  //   );
+  console.log(payload, rest);
+  return type in actors ? actors[type](payload)(state) : state;
 };
 
 export const useEntityDispatch = entityId => {

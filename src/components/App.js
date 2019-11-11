@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 
 const DataLiteral = () => {
   const s = useSelector(s => s);
+  const state = { ...s, todos: s.todos.map((t, i) => ({ ...t, id: i })) };
+
   return (
     <pre>
-      <code>{JSON.stringify(s, null, 4)}</code>
+      <code>{JSON.stringify(state, null, 4)}</code>
     </pre>
   );
 };

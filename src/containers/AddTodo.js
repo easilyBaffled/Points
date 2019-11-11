@@ -12,12 +12,20 @@ let AddTodo = ({ dispatch }) => {
         onSubmit={e => {
           e.preventDefault();
           dispatch(actions.addTodo({ text, value }));
-          setText();
-          setValue();
+          setText("");
+          setValue("");
         }}
       >
-        <input onChange={e => setText(e.target.value)} />
-        <input onChange={e => setValue(e.target.value)} />
+        <input
+          type="text"
+          onChange={e => setText(e.target.value)}
+          value={text}
+        />
+        <input
+          type="text"
+          onChange={e => setValue(e.target.value)}
+          value={value}
+        />
         {text}
         <button type="submit" disabled={!text}>
           Add Todo

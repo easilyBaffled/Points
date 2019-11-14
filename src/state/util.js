@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-
+import { curry } from "ramda";
 const required = ([name] = [""]) => {
   throw new Error(`${name || "value"} is required.`);
 };
@@ -63,7 +63,16 @@ export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
   { type = r`type`, payload } = r`action object`
 ) => {
-  return type in actors ? actors[type](payload)(state) : state;
+  try {
+    return type in actors ? actors[type](payload)(state) : state;
+  } catch (e) {
+    e.message = JSON.stringify(
+      { type, payload, state, ErrorMessage: e.message },
+      null,
+      4
+    );
+    throw e;
+  }
 };
 
 export const useEntityDispatch = entityId => {
@@ -72,3 +81,44 @@ export const useEntityDispatch = entityId => {
     dispatch({ id: entityId, ...action });
   };
 };
+
+const findIndex = (target, arr) =>
+  match({
+    [Number.isInteger(target)]: target,
+    [typeof target === "function"]: () => arr.findIndex(target),
+    [typeof target === "object"]: () =>
+      arr.findIndex(entry => entry === { ...entry, ...target })
+  });
+
+export const applyCurry = obj =>
+  Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => [
+      k,
+      typeof v === "function" ? curry(v) : v
+    ])
+  );
+
+export const standardArrayActions = applyCurry({
+  get: (find, arr) => arr[findIndex(find, arr)],
+  add: (entry, arr) => arr.concat(entry),
+  set: (find, value) => standardArrayActions.update(find, () => value),
+  update: (find, updater, arr) => {
+    const index = findIndex(find, arr);
+    return [].concat(
+      arr.slice(0, index),
+      updater(arr[index]),
+      arr.slice(index + 1)
+    );
+  },
+  remove: (find, arr) => {
+    const index = findIndex(find, arr);
+    return [].concat(arr.slice(0, index), arr.slice(index + 1));
+  }
+});
+
+export const standardObjectActions = applyCurry({
+  set: (payload, e) => ({ ...e, ...payload }),
+  update: (func, e) => func(e),
+  updateProp: (name, func, e) => ({ ...e, [name]: func(e[name]) }),
+  toggle: name => standardObjectActions.updateProp(name, v => !v)
+});

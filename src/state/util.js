@@ -62,18 +62,7 @@ export const createActions = updaters =>
 export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
   { type = r`type`, payload } = r`action object`
-) => {
-  try {
-    return type in actors ? actors[type](payload)(state) : state;
-  } catch (e) {
-    e.message = JSON.stringify(
-      { type, payload, state, ErrorMessage: e.message },
-      null,
-      4
-    );
-    throw e;
-  }
-};
+) => (type in actors ? actors[type](payload)(state) : state);
 
 export const useEntityDispatch = entityId => {
   const dispatch = useDispatch();
@@ -105,7 +94,7 @@ export const standardArrayActions = applyCurry({
   set: (find, value) => standardArrayActions.update(find, () => value),
   update: (find, updater, arr) => {
     const index = findIndex(find, arr);
-    console.log(arr, index, find);
+
     return [].concat(
       arr.slice(0, index),
       updater(arr[index]),

@@ -1,4 +1,3 @@
-import * as R from "ramda";
 import {
   createActions,
   createReducer,
@@ -6,10 +5,6 @@ import {
   standardArrayActions
 } from "./../util";
 import { actors as taskActors } from "./task";
-const todoById = id => list => console.tap(list).find(t => t.id === id);
-const todoIndexById = id => list => list.findIndex(t => t.id === id);
-
-const toggleCompleted = t => ({ ...t, completed: !t.completed });
 
 const initialState = [];
 
@@ -26,5 +21,6 @@ export const actors = {
 export const actions = createActions(actors);
 export default createReducer(actors, initialState);
 
-export const getList = s => s.list;
-export const getTodo = id => R.view(todoById(id));
+export const getTaskList = s => s.todos;
+export const getTask = id => s =>
+  standardArrayActions.get({ id }, getTaskList(s));

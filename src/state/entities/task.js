@@ -14,7 +14,7 @@ export const actors = {
     ...initialState,
     id: uuid(),
     text,
-    value
+    value: parseInt(value)
   }),
   toggleComplete: task => () => standardObjectActions.toggle("completed")(task)
 };
@@ -25,4 +25,4 @@ export default createReducer(actors, initialState);
 export const getId = t => t.id;
 export const getText = t => t.text;
 export const getValue = t => t.value;
-export const getSompleted = t => t.completed;
+export const isCompleted = t => t.completed;

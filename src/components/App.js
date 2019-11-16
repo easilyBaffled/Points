@@ -1,7 +1,9 @@
 import React from "react";
 import Footer from "./Footer";
 import AddTodo from "../containers/AddTodo";
+import AddReward from "../containers/AddReward";
 import VisibleTodoList from "../containers/VisibleTodoList";
+import RewardListContainer from "../containers/RewardListContainer";
 import { useSelector } from "react-redux";
 
 const DataLiteral = () => {
@@ -17,9 +19,13 @@ const DataLiteral = () => {
 
 const App = () => (
   <div>
+    <h1>Tasks</h1>
     <AddTodo />
     <VisibleTodoList />
     <Footer />
+    <h1>Rewards</h1>
+    <AddReward />
+    <RewardListContainer />
     <DataLiteral />
   </div>
 );

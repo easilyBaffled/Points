@@ -4,7 +4,7 @@ import { actions } from "../state/entities/todoList.js";
 
 let AddTodo = ({ dispatch }) => {
   const [text, setText] = useState();
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(1);
 
   return (
     <div>
@@ -26,7 +26,7 @@ let AddTodo = ({ dispatch }) => {
           onChange={e => setValue(e.target.value)}
           value={value}
         />
-        {text}
+
         <button type="submit" disabled={!text}>
           Add Todo
         </button>

@@ -1,6 +1,11 @@
-import uuid from "uuid/v1";
 import * as R from "ramda";
-import { createActions, createReducer, r } from "./../util";
+import {
+  createActions,
+  createReducer,
+  r,
+  standardArrayActions
+} from "./../util";
+import { actors as taskActors } from "./task";
 const todoById = id => list => console.tap(list).find(t => t.id === id);
 const todoIndexById = id => list => list.findIndex(t => t.id === id);
 
@@ -10,19 +15,12 @@ const initialState = [];
 
 export const actors = {
   addTodo: ({ text = r`todo text`, value = 1 }) => list =>
-    list.concat({
-      id: uuid(),
-      text,
-      value,
-      completed: false
-    }),
-  toggleTodo: id => list =>
-    Object.values({
-      ...list,
-      [todoIndexById(id)(list)]: toggleCompleted(
-        console.tap(todoById(id)(list))
-      )
-    })
+    list.concat(taskActors.create({ text, value })()),
+  toggleTodo: id =>
+    standardArrayActions.update(
+      { id },
+      task => taskActors.toggleComplete(task)() // All actors have the signature `payload => state => result` so that they can be used as a reducer function
+    )
 };
 
 export const actions = createActions(actors);

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { curry } from "ramda";
+import * as R from "ramda";
 const required = ([name] = [""]) => {
   throw new Error(`${name || "value"} is required.`);
 };
@@ -82,19 +82,20 @@ export const useEntityDispatch = entityId => {
   };
 };
 
-const findIndex = (target, arr) =>
+export const findIndex = (target, arr = []) =>
   match({
+    [true]: () => arr.findIndex(entry => R.equals(entry, target)),
     [Number.isInteger(target)]: target,
     [typeof target === "function"]: () => arr.findIndex(target),
     [typeof target === "object"]: () =>
-      arr.findIndex(entry => entry === { ...entry, ...target })
+      arr.findIndex(entry => R.equals(entry, { ...entry, ...target }))
   });
 
 export const applyCurry = obj =>
   Object.fromEntries(
     Object.entries(obj).map(([k, v]) => [
       k,
-      typeof v === "function" ? curry(v) : v
+      typeof v === "function" ? R.curry(v) : v
     ])
   );
 
@@ -104,6 +105,7 @@ export const standardArrayActions = applyCurry({
   set: (find, value) => standardArrayActions.update(find, () => value),
   update: (find, updater, arr) => {
     const index = findIndex(find, arr);
+    console.log(arr, index, find);
     return [].concat(
       arr.slice(0, index),
       updater(arr[index]),

@@ -1,6 +1,5 @@
 /* Task */
 import uuid from "uuid/v1";
-import * as R from "ramda";
 import {
   createActions,
   createReducer,

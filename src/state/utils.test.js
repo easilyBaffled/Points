@@ -1,5 +1,5 @@
 import "console.tap/dist-src/polyfill.js";
-import { match, createActions, createReducer } from "./util";
+import { match, createActions, createReducer, findIndex } from "./util";
 
 describe("match", () => {
   describe("should throw an error if the first value is not an object", () => {
@@ -108,5 +108,37 @@ describe("createReducer", () => {
     //   const mathReducer = createReducer(mathActors, state);
     //   expect(() => mathReducer({ type: "sum", payload: 0 })).toThrow();
     // });
+  });
+});
+
+describe("findIndex", () => {
+  test("treats a number as an index", () => {
+    const expected = 0;
+    const actual = findIndex(0);
+    expect(actual).toEqual(expected);
+  });
+  test("treats a function as a comparator", () => {
+    const expected = 2;
+    const actual = findIndex(v => v === "c", ["a", "b", "c"]);
+    expect(actual).toEqual(expected);
+  });
+  test("treats the returned value of a comparator function as a boolean", () => {
+    const expected = -1;
+    const actual = findIndex(() => false, [("a", "b", "c")]);
+    expect(actual).toEqual(expected);
+  });
+  test("treats an object as a subset of an array entry that will match", () => {
+    const expected = 2;
+    const actual = findIndex({ value: "test" }, [
+      { value: "a" },
+      { value: "b" },
+      { value: "test" }
+    ]);
+    expect(actual).toEqual(expected);
+  });
+  test("treats all other types as a direct comparision", () => {
+    const expected = 2;
+    const actual = findIndex("test", ["a", "b", "test"]);
+    expect(actual).toEqual(expected);
   });
 });

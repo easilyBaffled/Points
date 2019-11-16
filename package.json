@@ -26,7 +26,7 @@
     "ci": "npm start & wait-on http://localhost:3000 && cypress run --record --key e418092a-efa3-491a-a238-c6082278e7b2; echo $!; echo \"Done!\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --transformIgnorePatterns \"node_modules/(?!(console.tap))/\"",
+    "test": "react-scripts test --runInBand --env=jsdom --transformIgnorePatterns \"node_modules/(?!(console.tap))/\"",
     "test:once": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject"
   },

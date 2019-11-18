@@ -9,10 +9,18 @@ const getCompletedFilter = () => getFilters().contains("Completed");
 const getTodoList = () => cy.get("ul");
 const getTodoListItems = () => cy.get("ul").children();
 const getTodoItem = label => getTodoList().contains(label);
+const getRenderedState = () => cy.get("code").first();
+
 // Actions
 const takeSnapshot = () => cy.get("#root").snapshot("rendered");
-const enterText = (text = "test") => getTodoInput().type(text);
-const enterValue = (text = "test") => getTodoValueInput().type(text);
+const enterText = (text = "test") =>
+  getTodoInput()
+    .clear()
+    .type(text);
+const enterValue = (text = "test") =>
+  getTodoValueInput()
+    .clear()
+    .type(text);
 const submitTodo = () => getSubmitButton().click();
 const createTodo = (text, value) => {
   enterText(text);
@@ -22,7 +30,7 @@ const createTodo = (text, value) => {
 const toggleTodoItem = text => getTodoItem(text).click();
 const selectViewAllFilter = () => getViewAllFilter().click();
 const selectActiveFilter = () => getActiveFilter().click();
-const selectCompleteedFilter = () => getCompletedFilter().click();
+const selectCompletedFilter = () => getCompletedFilter().click();
 // Assertions
 const confirmItemIsDone = [
   "have.css",
@@ -30,6 +38,8 @@ const confirmItemIsDone = [
   "line-through solid rgb(0, 0, 0)"
 ];
 const haveValue = value => ["have.text", `: ${value}`];
+const stateHasValue = (name, value) =>
+  getRenderedState().contains(`"${name}": ${value}`);
 
 describe("App", () => {
   describe("Render", () => {
@@ -71,7 +81,7 @@ describe("App", () => {
         takeSnapshot("Active Filter");
       });
       it("`Completed` should show completed todo", () => {
-        selectCompleteedFilter();
+        selectCompletedFilter();
         getTodoListItems().should("have.length", 1);
         takeSnapshot("Completed Filter");
       });
@@ -85,6 +95,45 @@ describe("App", () => {
         getTodoItem("test2").should("exist");
         getTodoItem("test2").contains(": 2");
       });
+    });
+    describe("bank", () => {
+      it("should have value 1", () => {
+        stateHasValue("bank", 1);
+      });
+    });
+  });
+  describe("Remote Data", () => {
+    it("should maintain state on a page reload", () => {
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          todos: [
+            {
+              completed: true,
+              value: 1,
+              id: 0,
+              text: "a"
+            },
+            {
+              completed: false,
+              value: 1,
+              id: 1,
+              text: "b"
+            },
+            {
+              completed: false,
+              value: 2,
+              id: 2,
+              text: "c"
+            }
+          ],
+          visibilityFilter: "SHOW_ALL",
+          rewards: [],
+          bank: 1
+        })
+      );
+      cy.reload();
+      console.log(localStorage.getItem("state"));
     });
   });
 });

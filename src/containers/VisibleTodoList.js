@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onTodoClick: actions.toggleTodo
+  onTodoClick: actions.toggleComplete
 };
 
 const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);

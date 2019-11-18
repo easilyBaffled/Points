@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { actions } from "../state/entities/todoList.js";
 
 let AddTodo = ({ dispatch }) => {
-  const [text, setText] = useState();
+  const [text, setText] = useState("");
   const [value, setValue] = useState(1);
 
   return (
@@ -13,7 +13,7 @@ let AddTodo = ({ dispatch }) => {
           e.preventDefault();
           dispatch(actions.addTodo({ text, value }));
           setText("");
-          setValue("");
+          setValue(1);
         }}
       >
         <input

@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import _ from "lodash";
 import * as R from "ramda";
 const required = ([name] = [""]) => {
   throw new Error(`${name || "value"} is required.`);
@@ -71,15 +72,6 @@ export const useEntityDispatch = entityId => {
   };
 };
 
-export const findIndex = (target, arr = []) =>
-  match({
-    [true]: () => arr.findIndex(entry => R.equals(entry, target)),
-    [Number.isInteger(target)]: target,
-    [typeof target === "function"]: () => arr.findIndex(target),
-    [typeof target === "object"]: () =>
-      arr.findIndex(entry => R.equals(entry, { ...entry, ...target }))
-  });
-
 export const applyCurry = obj =>
   Object.fromEntries(
     Object.entries(obj).map(([k, v]) => [
@@ -89,11 +81,11 @@ export const applyCurry = obj =>
   );
 
 export const standardArrayActions = applyCurry({
-  get: (find, arr) => arr[findIndex(find, arr)],
+  get: (find, arr) => _.find(arr, find),
   add: (entry, arr) => arr.concat(entry),
   set: (find, value) => standardArrayActions.update(find, () => value),
   update: (find, updater, arr) => {
-    const index = findIndex(find, arr);
+    const index = _.findIndex(arr, find);
 
     return [].concat(
       arr.slice(0, index),
@@ -102,7 +94,7 @@ export const standardArrayActions = applyCurry({
     );
   },
   remove: (find, arr) => {
-    const index = findIndex(find, arr);
+    const index = _.findIndex(arr, find);
     return [].concat(arr.slice(0, index), arr.slice(index + 1));
   }
 });

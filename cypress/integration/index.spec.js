@@ -104,36 +104,42 @@ describe("App", () => {
   });
   describe("Remote Data", () => {
     it("should maintain state on a page reload", () => {
-      localStorage.setItem(
-        "state",
-        JSON.stringify({
-          todos: [
-            {
-              completed: true,
-              value: 1,
-              id: 0,
-              text: "a"
-            },
-            {
-              completed: false,
-              value: 1,
-              id: 1,
-              text: "b"
-            },
-            {
-              completed: false,
-              value: 2,
-              id: 2,
-              text: "c"
-            }
-          ],
-          visibilityFilter: "SHOW_ALL",
-          rewards: [],
-          bank: 1
-        })
-      );
+      const state = {
+        todos: [
+          {
+            completed: true,
+            value: 1,
+            id: 0,
+            text: "a"
+          }
+        ],
+        visibilityFilter: "SHOW_ALL",
+        rewards: [],
+        bank: 1
+      };
+      localStorage.setItem("state", JSON.stringify(state));
       cy.reload();
-      console.log(localStorage.getItem("state"));
+      stateHasValue("bank", 1);
+    });
+    it("should update stored state on a page reload", () => {
+      const state = {
+        todos: [
+          {
+            completed: true,
+            value: 1,
+            id: 0,
+            text: "a"
+          }
+        ],
+        visibilityFilter: "SHOW_ALL",
+        rewards: [],
+        bank: 1
+      };
+      localStorage.setItem("state", JSON.stringify(state));
+      cy.reload();
+      toggleTodoItem("a");
+      cy.reload();
+      stateHasValue("bank", 0);
     });
   });
 });

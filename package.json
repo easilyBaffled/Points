@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "console.tap": "^0.3.9",
+    "lodash": "^4.17.15",
     "prop-types": "15.7.2",
     "ramda": "^0.26.1",
     "react": "16.11.0",

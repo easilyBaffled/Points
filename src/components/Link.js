@@ -6,18 +6,7 @@ const Link = ({ active, children, onClick }) => {
     return <span>{children}</span>;
   }
 
-  return (
-    <a
-      href="#"
-      onClick={e => {
-        // eslint-disable-line jsx-a11y/anchor-is-valid
-        e.preventDefault();
-        onClick();
-      }}
-    >
-      {children}
-    </a>
-  );
+  return <button onClick={() => onClick()}>{children}</button>;
 };
 
 Link.propTypes = {

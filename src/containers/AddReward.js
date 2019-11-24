@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actions } from "../state/entities/todoList.js";
+import { actions } from "../state/entities/rewardList.js";
 
-let AddTodo = ({ dispatch }) => {
-  const [text, setText] = useState("");
+let AddReward = ({ dispatch }) => {
+  const [text, setText] = useState();
   const [value, setValue] = useState(1);
 
   return (
@@ -11,9 +11,9 @@ let AddTodo = ({ dispatch }) => {
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(actions.addTodo({ text, value }));
+          dispatch(actions.addReward({ text, value }));
           setText("");
-          setValue(1);
+          setValue("");
         }}
       >
         <input
@@ -28,12 +28,12 @@ let AddTodo = ({ dispatch }) => {
         />
 
         <button type="submit" disabled={!text}>
-          Add Todo
+          Add Reward
         </button>
       </form>
     </div>
   );
 };
-AddTodo = connect()(AddTodo);
+AddReward = connect()(AddReward);
 
-export default AddTodo;
+export default AddReward;

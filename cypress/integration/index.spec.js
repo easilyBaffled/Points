@@ -10,7 +10,7 @@ const getTodoList = () => cy.get("ul");
 const getTodoListItems = () => cy.get("ul").children();
 const getTodoItem = label => getTodoList().contains(label);
 const getRenderedState = () => cy.get("code").first();
-
+const getBank = () => cy.get("#bank");
 // Actions
 const takeSnapshot = () => cy.get("#root").snapshot("rendered");
 const enterText = (text = "test") =>
@@ -119,7 +119,7 @@ describe("App", () => {
       };
       localStorage.setItem("state", JSON.stringify(state));
       cy.reload();
-      stateHasValue("bank", 1);
+      getBank().contains(1);
     });
     it("should update stored state on a page reload", () => {
       const state = {
@@ -137,9 +137,11 @@ describe("App", () => {
       };
       localStorage.setItem("state", JSON.stringify(state));
       cy.reload();
+      cy.wait(501);
       toggleTodoItem("a");
+      cy.wait(501);
       cy.reload();
-      stateHasValue("bank", 0);
+      getBank().contains(0);
     });
   });
 });

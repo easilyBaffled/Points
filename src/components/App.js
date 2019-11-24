@@ -5,6 +5,7 @@ import AddReward from "../containers/AddReward";
 import VisibleTodoList from "../containers/VisibleTodoList";
 import RewardListContainer from "../containers/RewardListContainer";
 import { useSelector } from "react-redux";
+import Bank from "./Bank";
 
 const DataLiteral = () => {
   const s = useSelector(s => s);
@@ -22,6 +23,7 @@ const App = () => (
     <h1>Tasks</h1>
     <AddTodo />
     <VisibleTodoList />
+    <Bank />
     <Footer />
     <h1>Rewards</h1>
     <AddReward />

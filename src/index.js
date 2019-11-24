@@ -12,6 +12,7 @@ const store = createStore(
 );
 
 getSavedState().then(payload => {
+  console.log(payload);
   store.dispatch({ type: "loadSaveDated", payload });
 });
 

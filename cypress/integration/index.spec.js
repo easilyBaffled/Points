@@ -109,7 +109,7 @@ describe("App", () => {
           {
             completed: true,
             value: 1,
-            id: 0,
+            id: "0-0-0-0",
             text: "a"
           }
         ],
@@ -127,7 +127,7 @@ describe("App", () => {
           {
             completed: true,
             value: 1,
-            id: 0,
+            id: "0-0-0-0",
             text: "a"
           }
         ],

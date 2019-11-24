@@ -1,7 +1,7 @@
 import _ from "lodash";
 const getLocalStorage = () => {
   try {
-    return JSON.parse(localStorage.getItem("state") || {});
+    return JSON.parse(localStorage.getItem("state") || "{}");
   } catch (e) {
     e.message = JSON.stringify(
       { loadedState: localStorage.getItem("state"), ErrorMessage: e.message },

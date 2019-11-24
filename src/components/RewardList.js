@@ -17,12 +17,12 @@ const RewardList = ({ rewards, onRewardClick }) => (
 RewardList.propTypes = {
   rewards: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired
-  // onRewardClick: PropTypes.func.isRequired
+  ).isRequired,
+  onRewardClick: PropTypes.func.isRequired
 };
 
 export default RewardList;

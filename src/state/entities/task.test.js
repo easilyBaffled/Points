@@ -1,4 +1,4 @@
-import reducer, { actors, actions, initialState } from "./task";
+import reducer, { actors, initialState } from "./task";
 
 const initialShape = expect.objectContaining({
   completed: expect.any(Boolean),

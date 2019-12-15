@@ -6,6 +6,7 @@ import {
   standardArrayActions
 } from "./../util";
 import { actors as taskActors } from "./task";
+import { applyDB } from "../../dataStore/util";
 
 const initialState = [];
 

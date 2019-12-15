@@ -44,7 +44,7 @@ const stateHasValue = (name, value) =>
 describe("App", () => {
   describe("Render", () => {
     it("should render without a problem", () => {
-      cy.visit("http://localhost:3000/", { timeout: 30000 });
+      cy.visit("http://localhost:3000?fakedb", { timeout: 30000 });
       cy.get("#root").should("exist");
       getSubmitButton().should("exist");
 

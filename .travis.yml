@@ -13,7 +13,6 @@ cache:
   directories:
     # we also need to cache folder with Cypress binary
     - node_modules
-    - ~/.cache
 before_script:
   - npm i
 script:

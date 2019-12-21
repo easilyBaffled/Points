@@ -73,11 +73,13 @@ export const useEntityDispatch = entityId => {
 };
 
 export const applyCurry = obj =>
-  Object.fromEntries(
-    Object.entries(obj).map(([k, v]) => [
-      k,
-      typeof v === "function" ? R.curry(v) : v
-    ])
+  _.reduce(
+    obj,
+    (acc, v, k) => ({
+      ...acc,
+      [k]: typeof v === "function" ? R.curry(v) : v
+    }),
+    {}
   );
 
 export const standardArrayActions = applyCurry({

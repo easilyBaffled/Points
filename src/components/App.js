@@ -6,6 +6,7 @@ import VisibleTodoList from "../containers/VisibleTodoList";
 import RewardListContainer from "../containers/RewardListContainer";
 import { useSelector } from "react-redux";
 import Bank from "./Bank";
+import ErrorBoundary from "./ErrorBoundary";
 
 const DataLiteral = () => {
   const s = useSelector(s => s);
@@ -19,17 +20,19 @@ const DataLiteral = () => {
 };
 
 const App = () => (
-  <div>
-    <h1>Tasks</h1>
-    <AddTodo />
-    <VisibleTodoList />
-    <Bank />
-    <Footer />
-    <h1>Rewards</h1>
-    <AddReward />
-    <RewardListContainer />
-    <DataLiteral />
-  </div>
+  <ErrorBoundary>
+    <div>
+      <h1>Tasks</h1>
+      <AddTodo />
+      <VisibleTodoList />
+      <Bank />
+      <Footer />
+      <h1>Rewards</h1>
+      <AddReward />
+      <RewardListContainer />
+      <DataLiteral />
+    </div>
+  </ErrorBoundary>
 );
 
 export default App;

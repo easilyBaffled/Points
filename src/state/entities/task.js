@@ -7,7 +7,7 @@ import {
   standardObjectActions
 } from "./../util";
 
-import db, { applyDB } from "../../dataStore";
+import db, { applyDB } from "../../dataStore/index";
 
 export const initialState = { completed: false, value: 1 };
 

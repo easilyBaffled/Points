@@ -15,7 +15,6 @@ const store = createStore(
 db.getTasks().then(console.log);
 
 getSavedState().then(payload => {
-  console.log(payload);
   store.dispatch({ type: "loadSaveDated", payload });
 });
 

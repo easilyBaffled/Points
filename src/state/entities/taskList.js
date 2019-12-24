@@ -6,10 +6,19 @@ import {
   standardObjectActions
 } from "./../util";
 import { actors as taskActors } from "./task";
+import { actors as groupActors } from "./group";
 
 const initialState = [];
 
 export const actors = {
+  addGroup: ({ text = r`Group Title`, value = 0 }) => collection => {
+    const group = groupActors.create({ text, value })();
+
+    return {
+      ...collection,
+      [group.id]: group
+    };
+  },
   addTodo: ({ text = r`todo text`, value = 1 }) => collection => {
     const task = taskActors.create({ text, value })();
 

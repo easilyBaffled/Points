@@ -31,5 +31,5 @@ module.exports = {
       }
     }
   },
-  __version: "3.4.1"
+  __version: "3.8.0"
 };

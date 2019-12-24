@@ -1,5 +1,4 @@
-import reducer, { actors, actions } from "./todoList";
-
+import reducer, { actors, actions } from "./taskList";
 describe("actions", () => {
   describe("addTodo", () => {
     test("empty payload", () => {});

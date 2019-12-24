@@ -1,6 +1,6 @@
 import { curry } from "ramda";
 import { createActions, r } from "./../util";
-import { getTask } from "./todoList";
+import { getTask } from "./taskList";
 import { getValue, isCompleted } from "./task";
 
 export const initialState = 0;

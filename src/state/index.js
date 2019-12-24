@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import todoList from "../state/entities/todoList";
+import taskList from "../state/entities/taskList";
 import viewFilters from "../state/entities/viewFilters";
 import rewards from "../state/entities/rewardList";
 import bank from "../state/entities/bank";
@@ -8,7 +8,7 @@ const todoApp = (state, action) => {
   if (action.type === "loadSaveDated") return { ...state, ...action.payload };
   try {
     const newState = combineReducers({
-      todos: todoList,
+      tasks: taskList,
       visibilityFilter: viewFilters,
       rewards
     })(state, action);

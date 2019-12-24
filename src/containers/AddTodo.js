@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actions } from "../state/entities/todoList.js";
+import { actions } from "../state/entities/taskList.js";
 
 let AddTodo = ({ dispatch }) => {
   const [text, setText] = useState("");

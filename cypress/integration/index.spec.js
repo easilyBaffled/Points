@@ -105,14 +105,14 @@ describe("App", () => {
   describe("Remote Data", () => {
     it("should maintain state on a page reload", () => {
       const state = {
-        todos: [
-          {
+        tasks: {
+          "0-0-0-0": {
             completed: true,
             value: 1,
             id: "0-0-0-0",
             text: "a"
           }
-        ],
+        },
         visibilityFilter: "SHOW_ALL",
         rewards: [],
         bank: 1
@@ -123,14 +123,14 @@ describe("App", () => {
     });
     it("should update stored state on a page reload", () => {
       const state = {
-        todos: [
-          {
+        tasks: {
+          "0-0-0-0": {
             completed: true,
             value: 1,
             id: "0-0-0-0",
             text: "a"
           }
-        ],
+        },
         visibilityFilter: "SHOW_ALL",
         rewards: [],
         bank: 1

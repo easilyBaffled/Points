@@ -8,7 +8,6 @@ import {
 } from "./../util";
 
 import db, { applyDB } from "../../dataStore/index";
-
 export const initialState = { completed: false, value: 1 };
 
 export const actors = applyDB(

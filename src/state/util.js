@@ -63,7 +63,8 @@ export const createActions = updaters =>
 export const createReducer = (actors = r`actors`, initialState = {}) => (
   state = initialState,
   { type = r`type`, payload } = r`action object`
-) => (type in actors ? actors[type](payload)(state) : state);
+) =>
+  type in actors ? console.tap(actors[type], actors)(payload)(state) : state;
 
 export const useEntityDispatch = entityId => {
   const dispatch = useDispatch();
@@ -102,8 +103,9 @@ export const standardArrayActions = applyCurry({
 });
 
 export const standardObjectActions = applyCurry({
+  get: (payload, obj) => obj[_.findKey(obj, payload)],
   set: (payload, e) => ({ ...e, ...payload }),
-  update: (func, e) => func(e),
+  update: (find, updater, obj) => _.update(obj, _.findKey(obj, find), updater),
   updateProp: (name, func, e) => ({ ...e, [name]: func(e[name]) }),
   toggle: name => standardObjectActions.updateProp(name, v => !v)
 });

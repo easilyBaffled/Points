@@ -6,11 +6,29 @@ import VisibleTodoList from "../containers/VisibleTodoList";
 import RewardListContainer from "../containers/RewardListContainer";
 import { useSelector } from "react-redux";
 import Bank from "./Bank";
-import ErrorBoundary from "./ErrorBoundary";
+import _ from "lodash";
 
 const DataLiteral = () => {
   const s = useSelector(s => s);
-  const state = { ...s, todos: s.todos.map((t, i) => ({ ...t, id: i })) };
+  const state = {
+    ...s,
+    tasks: _.reduce(
+      s.tasks,
+      (acc, v) => ({
+        ...acc,
+        [Object.keys(acc).length]: { ...v, id: Object.keys(acc).length }
+      }),
+      {}
+    ),
+    rewards: _.reduce(
+      s.rewards,
+      (acc, v) => ({
+        ...acc,
+        [Object.keys(acc).length]: { ...v, id: Object.keys(acc).length }
+      }),
+      {}
+    )
+  };
 
   return (
     <pre>
@@ -20,19 +38,17 @@ const DataLiteral = () => {
 };
 
 const App = () => (
-  <ErrorBoundary>
-    <div>
-      <h1>Tasks</h1>
-      <AddTodo />
-      <VisibleTodoList />
-      <Bank />
-      <Footer />
-      <h1>Rewards</h1>
-      <AddReward />
-      <RewardListContainer />
-      <DataLiteral />
-    </div>
-  </ErrorBoundary>
+  <div>
+    <h1>Tasks</h1>
+    <AddTodo />
+    <VisibleTodoList />
+    <Bank />
+    <Footer />
+    <h1>Rewards</h1>
+    <AddReward />
+    <RewardListContainer />
+    <DataLiteral />
+  </div>
 );
 
 export default App;

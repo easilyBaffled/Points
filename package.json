@@ -5,8 +5,10 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@cypress/unique-selector": "0.4.1",
     "console.tap": "^0.5.0",
     "date-fns": "^2.8.1",
+    "deep-diff": "^1.0.2",
     "firebase": "^7.6.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",

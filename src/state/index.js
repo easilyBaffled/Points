@@ -57,10 +57,12 @@ setTimeout(() => {
     //     }
     //   }
     // }
-  ].map((s, i, ss) => {
-    if (i + 1 === ss.length) return "";
-    return createUpdateCommand(s, ss[i + 1]);
-  });
+  ]
+    .map((s, i, ss) => {
+      if (i + 1 === ss.length) return null;
+      return createUpdateCommand(s, ss[i + 1]);
+    })
+    .filter(v => v);
   console.log(actions);
   Promise.all(actions).then(p => console.log(p));
 }, 1000);

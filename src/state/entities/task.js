@@ -7,7 +7,7 @@ import {
   standardObjectActions
 } from "./../util";
 
-import db, { applyDB } from "../../dataStore/index";
+import { applyDB, tasksDb } from "../../dataStore";
 export const initialState = { completed: false, value: 1 };
 
 export const actors = applyDB(
@@ -22,8 +22,8 @@ export const actors = applyDB(
       standardObjectActions.toggle("completed")(task)
   },
   {
-    create: db.createTask,
-    toggleComplete: db.updateTask
+    create: tasksDb.create,
+    toggleComplete: tasksDb.update
   }
 );
 

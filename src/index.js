@@ -6,13 +6,13 @@ import { Provider } from "react-redux";
 import App from "./components/App";
 import reducer from "./state";
 import { get as getSavedState } from "./dataConnection";
-import db from "./dataStore";
+import { tasksDb } from "./dataStore";
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-db.getTasks().then(console.log);
+tasksDb.get().then(console.log);
 
 getSavedState().then(payload => {
   console.log(payload);

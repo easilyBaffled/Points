@@ -7,26 +7,17 @@ import {
   standardObjectActions
 } from "./../util";
 
-import { applyDB, tasksDb } from "../../dataStore";
 export const initialState = { completed: false, value: 1 };
 
-export const actors = applyDB(
-  {
-    create: ({ text = r`todo text`, value = 1 }) => () => ({
-      ...initialState,
-      id: uuid(),
-      text,
-      value: parseInt(value)
-    }),
-    toggleComplete: task => () =>
-      standardObjectActions.toggle("completed")(task)
-  },
-  {
-    create: tasksDb.create,
-    toggleComplete: tasksDb.update
-  }
-);
-
+export const actors = {
+  create: ({ text = r`todo text`, value = 1 }) => () => ({
+    ...initialState,
+    id: uuid(),
+    text,
+    value: parseInt(value)
+  }),
+  toggleComplete: task => () => standardObjectActions.toggle("completed")(task)
+};
 export const actions = createActions(actors);
 export default createReducer(actors, initialState);
 

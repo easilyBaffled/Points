@@ -7,7 +7,7 @@ import {
 } from "./../util";
 import { actors as taskActors } from "./task";
 
-const initialState = [];
+const initialState = {};
 
 export const actors = {
   addTodo: ({ text = r`todo text`, value = 1 }) => collection => {

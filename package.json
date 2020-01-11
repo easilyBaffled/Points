@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@cypress/unique-selector": "0.4.2",
+    "@firebase/testing": "^0.16.4",
     "console.tap": "^0.5.0",
     "date-fns": "^2.8.1",
     "deep-diff": "^1.0.2",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@cypress/snapshot": "^2.1.6",
     "cypress": "^3.8.1",
+    "firebase-tools": "^7.11.0",
     "prettier": "^1.19.1",
     "typescript": "3.7.4",
     "wait-on": "^3.3.0"
@@ -41,5 +43,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "fbToken": "1//05qDNyYvKAHIwCgYIARAAGAUSNwF-L9IrgbbWTVgEUfGeAlw6WyB-y-VuAPrMiv3DEVBN4iIJGDpNopZxx6ngjuLSQpciuz-ev68"
 }

@@ -39,33 +39,45 @@ function getDataFromDoc(doc) {
 }
 
 export function getDocsFromSnapshot(snapshot) {
-  const docs = [];
+  const docs = {};
+  console.log(snapshot);
   snapshot.forEach(doc => {
-    docs.push(getDataFromDoc(doc));
+    docs[doc.id] = getDataFromDoc(doc);
   });
   return docs;
 }
 
-const promiseDebugHelpers = promiseFn => (...args) =>
+export const promiseDebugHelpers = promiseFn => (...args) =>
   promiseFn(...args)
     .then(res => {
       console.log(
-        `%c\`${promiseFn.name}\` was successful${ args.length ? `with ${JSON.stringify(
-          args,
-          null,
-          4
-        )}`: '!' }`
-        ,
+        `%c\`${promiseFn.name}\` was successful.`,
         "background: forestgreen; color: white; padding: 6px; border-radius: 6px;"
       );
       return res;
     })
     .catch(e => {
-      e.message = JSON.stringify({
-        name: promiseFn.name,
-        args,
-        ErrorMessage: e.message
-      });
+      let cache = [];
+      e.message = JSON.stringify(
+        {
+          name: promiseFn.name,
+          // args,
+          ErrorMessage: e.message
+        },
+        function(key, value) {
+          if (typeof value === "object" && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Duplicate reference found, discard key
+              return;
+            }
+            // Store value in our collection
+            cache.push(value);
+          }
+          return value;
+        },
+        4
+      );
+      cache = null;
       throw e;
     });
 

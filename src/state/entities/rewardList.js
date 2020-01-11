@@ -18,5 +18,5 @@ export const actors = {
 export const actions = createActions(actors);
 export default createReducer(actors, initialState);
 
-export const getRewardList = s => console.tap(s).rewards;
+export const getRewardList = s => s.rewards;
 export const getReward = id => standardArrayActions.get({ id });

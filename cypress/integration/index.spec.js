@@ -1,3 +1,8 @@
+/// <reference types="Cypress" />
+// https://docs.cypress.io/guides/tooling/intelligent-code-completion.html#Writing-Tests
+// http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html
+
+import { clearCache } from "../../src/dataStore";
 // Getters
 const getTodoInput = () => cy.get("input").first();
 const getTodoValueInput = () => cy.get("input").eq(1);
@@ -42,6 +47,24 @@ const stateHasValue = (name, value) =>
   getRenderedState().contains(`"${name}": ${value}`);
 
 describe("App", () => {
+  before(() => {
+    clearCache();
+  });
+  // after(() => {
+  //   clearCache();
+  // });
+  // afterEach(() => {
+  //   cy.get("iframe")
+  //     .catch(() => "")
+  //     .then(el => {
+  //       if (el) {
+  //         console.error("found iFrame");
+  //         console.log(el);
+  //         Cypress.runner.stop();
+  //       }
+  //     })
+  //
+  // });
   describe("Render", () => {
     it("should render without a problem", () => {
       cy.visit("http://localhost:3000?fakedb", { timeout: 30000 });
@@ -98,44 +121,17 @@ describe("App", () => {
     });
     describe("bank", () => {
       it("should have value 1", () => {
-        stateHasValue("bank", 1);
+        getBank().contains(1);
       });
     });
   });
   describe("Remote Data", () => {
     it("should maintain state on a page reload", () => {
-      const state = {
-        tasks: {
-          "0-0-0-0": {
-            completed: true,
-            value: 1,
-            id: "0-0-0-0",
-            text: "a"
-          }
-        },
-        visibilityFilter: "SHOW_ALL",
-        rewards: [],
-        bank: 1
-      };
-      localStorage.setItem("state", JSON.stringify(state));
+      cy.wait(30000);
       cy.reload();
       getBank().contains(1);
     });
     it("should update stored state on a page reload", () => {
-      const state = {
-        tasks: {
-          "0-0-0-0": {
-            completed: true,
-            value: 1,
-            id: "0-0-0-0",
-            text: "a"
-          }
-        },
-        visibilityFilter: "SHOW_ALL",
-        rewards: [],
-        bank: 1
-      };
-      localStorage.setItem("state", JSON.stringify(state));
       cy.reload();
       cy.wait(501);
       toggleTodoItem("a");

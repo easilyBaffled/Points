@@ -1,27 +1,37 @@
 import deepDiff from "deep-diff";
+import _ from "lodash";
+
+const createPath = pathArray =>
+  pathArray.length === 1 ? pathArray[0] + "/only" : pathArray.join("/");
 
 const kindMapping = {
   N: d => ({
-    action: "add",
-    path: d.path.join("/"),
+    action: "create",
+    path: createPath(d.path),
     payload: d.rhs
   }),
   D: d => ({
-    action: "delete",
-    path: d.path.join("/")
+    action: "remove",
+    path: createPath(d.path)
   }),
   E: d => ({
-    action: "set",
-    path: d.path.split(0, -1).join("/"),
-    payload: { [d.path.split(-1)]: d.rhs }
+    action: "update",
+    path: createPath(d.path.length ? _.initial(d.path) : d.path),
+    payload: { [d.path.length ? _.last(d.path) : "value"]: d.rhs }
   }),
   A: () => "array"
 };
 
 const createCommand = (prevState, newState) => {
+  console.group();
+  console.log({ prevState: prevState, newState: newState });
   const diffList = deepDiff.diff(prevState, newState);
   console.log(diffList);
-  return diffList.map(d => kindMapping[d.kind](d));
+  const commandList = diffList.map(d => kindMapping[d.kind](d));
+
+  console.log(commandList);
+  console.groupEnd();
+  return commandList;
 };
 
 export default createCommand;
